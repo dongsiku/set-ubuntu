@@ -1,28 +1,52 @@
 #!/bin/bash
 
-sudo ufw enable
-sudo ufw default deny 
+SET_UBUNTU_SH_FILENAME=`readlink -f $0`
+SET_UBUNTU_SH_DIRNAME=`dirname $SET_UBUNTU_SH_FILENAME`
 
+# Common 1
 sudo apt update
+packages="git vim python3-venv python3-pip"
+
+# Option
+## Ubuntu
+### Set ufw
+packages="$packages ufw"
+sudo ufw enable
+sudo ufw default deny
+
+### edit .bashrc
+cp $HOME/.bashrc $HOME/.bashrc.org
+sed -e 's/#force_color_prompt=yes/force_color_prompt=yes/g' $HOME/.bashrc.org > $HOME/.bashrc
+
+### Ubuntu-Native
+sudo timedatectl set-local-rtc true 
+
+### Ubuntu-VMWare
+packages="$packages open-vm-tools open-vm-tools-desktop"
+
+## WSL
+packages="$packages pdftk"
+
+# Common 2
+## Upgrade and Install apt-packages
+sudo apt install $packages -y
 sudo apt upgrade -y
 sudo apt autoremove -y
 sudo apt autoclean
 sudo apt clean 
 
-sudo apt install git open-vm-tools open-vm-tools-desktop vim ufw python3-venv python3-pip -y
+## Install third-party applications
+sudo dpkg -i $SET_UBUNTU_SH_DIRNAME/*.deb # ??
+sudo apt install --fix-broken -y
 
-# vim .bashrc 
-source .bashrc 
+## Install MyBashAliases
+git clone https://github.com/dongsiku/MyBashAliases.git
 
-# sudo dpkg -i code_1.40.2-1574694120_amd64.deb 
-# sudo dpkg -i google-chrome-stable_current_amd64.deb 
 
-# Install git-credential
+# Ubuntu
+## Install git-credential
 sudo apt-get install libgnome-keyring-dev -y
 cd /usr/share/doc/git/contrib/credential/gnome-keyring
 sudo make
 git config --global credential.helper \
     /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
-
-# Install MyBashAliases
-git clone https://github.com/dongsiku/MyBashAliases.git
