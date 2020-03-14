@@ -9,6 +9,7 @@ if [ "$MODE" != 'debian-wsl' ] && \
         [ "$MODE" != 'ubuntu-dualboot' ] && \
         [ "$MODE" != 'ubuntu-vmware' ]; then
     echo "Unexpected value: $MODE"
+    echo "debian-wsl or ubuntu-dualboot or ubntu-vmware"
     exit 1
 fi
 
