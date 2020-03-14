@@ -54,7 +54,7 @@ sudo apt autoclean
 sudo apt clean 
 
 ## Install third-party applications
-sudo dpkg -i $SET_UBUNTU_SH_DIRNAME/*.deb # ??
+sudo apt ./$SET_UBUNTU_SH_DIRNAME/*.deb # ??
 sudo apt install --fix-broken -y
 
 ## Install MyBashAliases
