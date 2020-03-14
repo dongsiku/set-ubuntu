@@ -25,7 +25,7 @@ fi
 
 # Common 1
 sudo apt update
-packages="git vim python3-venv python3-pip"
+packages="git vim python3-venv python3-pip bash-completion"
 
 # Option
 ## Ubuntu
@@ -86,5 +86,5 @@ fi
 # WSL
 if [ "$MODE" == "$MODE_DEBIAN_WSL" ]; then
     ## Import /usr/share/bash-completion/completions/*
-    echo 'source /usr/share/bash-completion/completions/*' >> $HOME/.bash_aliases
+    echo '. /usr/share/bash-completion/completions/*' >> $HOME/.bash_aliases
 fi
