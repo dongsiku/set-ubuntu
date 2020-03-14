@@ -5,11 +5,15 @@ SET_UBUNTU_SH_DIRNAME=`dirname $SET_UBUNTU_SH_FILENAME`
 
 MODE=`${$1,,}`
 
-if [ "$MODE" != 'debian-wsl' ] && \
-        [ "$MODE" != 'ubuntu-dualboot' ] && \
-        [ "$MODE" != 'ubuntu-vmware' ]; then
+MODE_DEBIAN_WSL='debian-wsl'
+MODE_UBUNTU_DUALBOOT='ubuntu-dualboot'
+MODE_UBUNTU_VMWARE='ubuntu-vmware'
+
+if [ "$MODE" != "$MODE_DEBIAN_WSL" ] && \
+        [ "$MODE" != "$MODE_UBUNTU_DUALBOOT" ] && \
+        [ "$MODE" != "$MODE_UBUNTU_VMWARE" ]; then
     echo "Unexpected value: $MODE"
-    echo "debian-wsl or ubuntu-dualboot or ubntu-vmware"
+    echo "$MODE_DEBIAN_WSL or $MODE_UBUNTU_DUALBOOT or $MODE_UBUNTU_VMWARE"
     exit 1
 fi
 
@@ -19,8 +23,8 @@ packages="git vim python3-venv python3-pip"
 
 # Option
 ## Ubuntu
-if [ "$MODE" == 'ubuntu-dualboot' ] || \
-        [ "$MODE" == 'ubuntu-vmware' ]; then
+if [ "$MODE" == "$MODE_UBUNTU_DUALBOOT" ] || \
+        [ "$MODE" == "$MODE_UBUNTU_VMWARE" ]; then
     ### Set ufw
     packages="$packages ufw"
     sudo ufw enable
@@ -32,17 +36,17 @@ if [ "$MODE" == 'ubuntu-dualboot' ] || \
 fi
 
 ### Ubuntu-Dualboot
-if [ "$MODE" == 'ubuntu-dualboot' ]; then
+if [ "$MODE" == "$MODE_UBUNTU_DUALBOOT" ]; then
     sudo timedatectl set-local-rtc true 
 fi
 
 ### Ubuntu-VMWare
-if [ "$MODE" == 'ubuntu-vmware' ]; then
+if [ "$MODE" == "$MODE_UBUNTU_VMWARE" ]; then
     packages="$packages open-vm-tools open-vm-tools-desktop"
 fi
 
 ## WSL
-if [ "$MODE" == 'debian-wsl' ] || \
+if [ "$MODE" == "$MODE_DEBIAN_WSL" ] || \
     packages="$packages pdftk"
 fi
 
@@ -63,8 +67,8 @@ git clone https://github.com/dongsiku/MyBashAliases.git
 
 
 # Ubuntu
-if [ "$MODE" == 'ubuntu-dualboot' ] || \
-        [ "$MODE" == 'ubuntu-vmware' ]; then
+if [ "$MODE" == "$MODE_UBUNTU_DUALBOOT" ] || \
+        [ "$MODE" == "$MODE_UBUNTU_VMWARE" ]; then
     ## Install git-credential
     sudo apt-get install libgnome-keyring-dev -y
     cd /usr/share/doc/git/contrib/credential/gnome-keyring
