@@ -3,11 +3,17 @@
 SET_UBUNTU_SH_FILENAME=`readlink -f $0`
 SET_UBUNTU_SH_DIRNAME=`dirname $SET_UBUNTU_SH_FILENAME`
 
-MODE=`${$1,,}`
-
 MODE_DEBIAN_WSL='debian-wsl'
 MODE_UBUNTU_DUALBOOT='ubuntu-dualboot'
 MODE_UBUNTU_VMWARE='ubuntu-vmware'
+
+if [ -z "$1" ]; then  # is ""
+    echo "No value"
+    echo "$MODE_DEBIAN_WSL or $MODE_UBUNTU_DUALBOOT or $MODE_UBUNTU_VMWARE"
+    exit 1
+else
+    MODE="$1"
+fi
 
 if [ "$MODE" != "$MODE_DEBIAN_WSL" ] && \
         [ "$MODE" != "$MODE_UBUNTU_DUALBOOT" ] && \
@@ -59,7 +65,7 @@ sudo apt autoclean
 sudo apt clean 
 
 ## Install third-party applications
-sudo apt ./$SET_UBUNTU_SH_DIRNAME/*.deb # ??
+sudo apt $SET_UBUNTU_SH_DIRNAME/*.deb # ??
 sudo apt install --fix-broken -y
 
 ## Install MyBashAliases
