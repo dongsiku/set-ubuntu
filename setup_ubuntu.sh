@@ -53,7 +53,7 @@ fi
 
 ## WSL
 if [ "$MODE" == "$MODE_DEBIAN_WSL" ]; then
-    packages="$packages pdftk"
+    packages="$packages pdftk bash-completion"
 fi
 
 # Common 2
@@ -81,10 +81,4 @@ if [ "$MODE" == "$MODE_UBUNTU_DUALBOOT" ] || \
     sudo make
     git config --global credential.helper \
         /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
-fi
-
-# WSL
-if [ "$MODE" == "$MODE_DEBIAN_WSL" ]; then
-    ## Import /usr/share/bash-completion/completions/*
-    echo '. /usr/share/bash-completion/completions/*' >> $HOME/.bash_aliases
 fi
